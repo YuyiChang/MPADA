@@ -1,0 +1,45 @@
+html {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    max_width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.step {
+    padding: 10px 20px;
+}
+
+table, th, td {
+    border: 1px solid;
+    font-size: 14px;
+    /* border-collapse: collapse; */
+}
+
+th, td {
+    text-align: center;
+    padding: 10px;
+}
+
+tr:hover {
+    background-color: green;
+    color: white;
+}
+
+.form__submit {
+    padding: 10px 16px;
+    font-size: 16px;
+    background-color: unset;
+    border: 2px solid green;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+.form__submit:hover {
+    background-color: green;
+    color: white
+}

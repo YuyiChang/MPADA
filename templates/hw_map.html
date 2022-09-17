@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hardware Map | MPADA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="../static/css/style.css" />
+</head>
+
+<body>
+    <div class="step">
+        <h1>Hardware Map</h1>
+        <h2>Wiring map: Antenna to RF switch</h2>
+        {{table_ant}}
+        <h2>Wiring map: RF switch to MCU</h2>
+        {{table_gpio}}
+
+        <input class="form__submit" type="submit" value="Confirm hardware mapping"/>
+    </div>    
+</body>
+
+</html>
