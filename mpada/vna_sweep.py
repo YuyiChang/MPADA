@@ -1,4 +1,5 @@
 import numpy as np
+from flask import Markup
 
 class VnaSweep:
     def __init__(self):
@@ -35,5 +36,49 @@ class VnaSweep:
         for tx, rx in zip(ant_list[0], ant_list[1]):
             self.sweep_pair.append((tx, rx))
         print(self.sweep_pair)
+
+    # get sweep table
+    def get_sweep_table(self):
+        num_sweep = len(self.sweep_pair)
+        base_str = ""
+
+        for h in ["Sweep", "TX Selected", "RX Selected"]:
+            base_str += "<tr>\n\t<th>{:}</th>\n".format(h)
+            for i in range(num_sweep):
+                if h == "Sweep":
+                    base_str += "\t<th>{:}</th>\n".format(i)
+                elif h == "TX":
+                    base_str += "\t<td>{:}</td>\n".format(self.sweep_pair[i][0])
+                else:
+                    base_str += "\t<td>{:}</td>\n".format(self.sweep_pair[i][1])
+            base_str += "</tr>\n"
+        return Markup(base_str)
+
+    # start sweeping
+    def sweep(self, dict_ctl):
+        def get_gpio_and_signal(dict_ctl, ant):
+            return dict_ctl[ant][0], dict_ctl[ant][1]
+
+        def get_control_str(ant, gpio, sig):
+            base_str = ""
+            for g, s in zip(gpio, sig):
+                base_str += "{:}={:} ".format(g, s)
+            return base_str
+            
+        num_sweep = len(self.sweep_pair)
+        for i in range(num_sweep):
+            tx, rx = self.sweep_pair[i]
+            print("======== Starting Sweep #{:}========".format(i))
+            tx_gpio, tx_sig = get_gpio_and_signal(dict_ctl, tx)
+            rx_gpio, rx_sig = get_gpio_and_signal(dict_ctl, rx)
+
+            tx_str = get_control_str(tx, tx_gpio, tx_sig)
+            rx_str = get_control_str(rx, rx_gpio, rx_sig)
+
+            # TODO: set control signal to VNA and MCU
+            # for testing, show a randomly generated signal
+            
+            print("{:}: {:}\n{:}: {:}".format(tx, tx_str, rx, rx_str))
+            print("========== End of Sweep ==========".format(i))
 
 

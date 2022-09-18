@@ -45,6 +45,10 @@ def create_sweep_settings():
 @app.route("/sweeping", methods=["GET", "POST"])
 def create_sweeping():
     HwSpec.get_ant_gpio_map() # make sure hw map is updated
-    print(HwSpec.dict_ant_gpio)
-    print(VnaSpec.sweep_pair)
-    return render_template("sweeping.html")
+    # print(HwSpec.dict_ant_gpio)
+    # print(VnaSpec.sweep_pair)
+    table_sweep = VnaSpec.get_sweep_table()
+    if request.method == "POST":
+        print("Start sweeping...")
+        VnaSpec.sweep(HwSpec.dict_ant_gpio)
+    return render_template("sweeping.html", table_sweep=table_sweep)

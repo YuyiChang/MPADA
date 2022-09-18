@@ -5,5 +5,16 @@
 {% endblock %}
 
 {% block content %}
+<div class="w3-responsive">
+    <table class="w3-table-all">
+        {{table_sweep}}
+    </table>
+</div>
+
+<div class="step">
+    <form method="POST">
+        <input class="form__submit" type="submit" value="Start"/>
+    </form>
+</div>
 
 {% endblock %}
