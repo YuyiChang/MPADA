@@ -8,9 +8,11 @@ class HwSpec:
         self.rfs_num_ctl = 3
         self.rfs_num_port = 8
         self.mcu_num_gpio = 6
-        self.dict_ant = {}
-        self.dict_gpio = {}
-        self.dict_ant_gpio = {}
+        self.dict_ant = {} # ANT to control lane mapping
+        self.dict_gpio = {} # RF switch to GPIO mapping
+        self.dict_ant_gpio = {} # ANT to GPIO signal mapping
+        self.ant_list_tx = []
+        self.ant_list_rx = []
 
     def get_info(self):
         print("\n=======================================================")
@@ -23,15 +25,17 @@ class HwSpec:
     # create hardware port mapping table
     def get_wiring_ant_rfs(self):
         def format_ant(num, type_str, rfs_num_ctl, dict_ant):
+            ant_list = []
             base_str = ""
             for i in range(num):
                 ant_name = type_str + "_{:}".format(i)
+                ant_list.append(ant_name)
                 rfs_name = type_str + "_RF{:}".format(i+1)
                 rfs_signal = "{0:b}".format(i).zfill(rfs_num_ctl)[::-1]
                 dict_ant[ant_name] = rfs_signal
                 sub_str = "<tr><td>{:}</td><td>{:}</td><td>{:}</td></tr>".format(ant_name, rfs_name, rfs_signal)
                 base_str += sub_str
-            return base_str
+            return base_str, ant_list
 
         # number of control lane on each RF switch
         rfs_num_ctl = self.rfs_num_ctl
@@ -40,8 +44,8 @@ class HwSpec:
         dict_ant = dict()
 
         # table elements for ANT to RFS wiring
-        wiring_tx = format_ant(self.ant_num_tx, 'TX', rfs_num_ctl, dict_ant)
-        wiring_rx = format_ant(self.ant_num_rx, 'RX', rfs_num_ctl, dict_ant)
+        wiring_tx, self.ant_list_tx = format_ant(self.ant_num_tx, 'TX', rfs_num_ctl, dict_ant)
+        wiring_rx, self.ant_list_rx = format_ant(self.ant_num_rx, 'RX', rfs_num_ctl, dict_ant)
 
         self.dict_ant = dict_ant
 
@@ -64,19 +68,18 @@ class HwSpec:
                 base_str += "<tr><td>{:}</td><td>{:}</td></tr>".format(name_control_ln, name_gpio)
             dict_gpio[port_type] = gpio_list
 
-        # table_str = """
-        #     <table><thead><tr>
-        #         <th>RF Switch Control Lane</th>
-        #         <th>MCU GPIO</th>
-        #     </tr></thead><tbody>{:}</tbody></table>
-        # """
-
         self.dict_gpio = dict_gpio
 
         return Markup(base_str)
 
     # get GPIO value mapping for each antenna
     def get_ant_gpio_map(self):
+        # for debug or rapid test
+        if not bool(self.dict_ant) and not bool(self.dict_gpio):
+            print("ANT and GPIO dict not present, regenerating...")
+            _ = self.get_wiring_ant_rfs()
+            _ = self.get_wiring_gpio()
+
         self.dict_ant_gpio = dict()
         for key, val in self.dict_ant.items():
             gpio = self.dict_gpio[key[:2]]
