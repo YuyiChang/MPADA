@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from mpada import port_mapping, vna_sweep
+from mpada_test import test_sweep
 
 app = Flask(__name__)
 
@@ -48,7 +49,10 @@ def create_sweeping():
     # print(HwSpec.dict_ant_gpio)
     # print(VnaSpec.sweep_pair)
     table_sweep = VnaSpec.get_sweep_table()
+    fig_sweep = test_sweep.get_blank_fig_base64()
+
     if request.method == "POST":
         print("Start sweeping...")
         VnaSpec.sweep(HwSpec.dict_ant_gpio)
-    return render_template("sweeping.html", table_sweep=table_sweep)
+        fig_sweep = test_sweep.get_random_fig_base64()
+    return render_template("sweeping.html", table_sweep=table_sweep, fig_sweep=fig_sweep)
