@@ -4,15 +4,12 @@ html {
 }
 
 body {
-    max_width: 1000px;
     margin: 0 auto;
     padding: 0px;
 }
 
 footer {
     padding: 0px 20px;
-    /* position: fixed;
-    bottom: 0; */
 }
 
 .m_contianer {
@@ -20,6 +17,9 @@ footer {
     display: flex;
     flex-direction: column;
     height: 90vh;
+    max-width: 1200px;    
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .m_div {
