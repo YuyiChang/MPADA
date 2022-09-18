@@ -6,15 +6,28 @@
 
 {% block content %}
 <div class="step">
-    <h1>Hardware Map</h1>
     <h2>Wiring map: Antenna to RF switch</h2>
-    {{table_ant}}
+    <table class="w3-table-all w3-hoverable w3-centered" style="max-width:900px">
+        <tr>
+            <th>Antenna Port</th>
+            <th>RF Switch Port</th>
+            <th>RF Switch<br>Control Signal</th>
+        </tr>
+        {{table_ant}}
+    </table>
+    
     <h2>Wiring map: RF switch to MCU</h2>
-    {{table_gpio}}
 
+    <table class="w3-table-all w3-hoverable w3-centered" style="max-width:500px">
+        <tr>
+          <th>RF Switch<br> Control Lane</th>
+          <th>MCU GPIO</th>
+        </tr>
+        {{table_gpio}}
+    </table>
+    <br>
     <form method="POST">
         <input class="form__submit" type="submit" value="Confirm hardware mapping"/>
     </form>
-    
 </div>    
 {% endblock %}

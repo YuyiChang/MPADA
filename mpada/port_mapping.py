@@ -43,17 +43,9 @@ class HwSpec:
         wiring_tx = format_ant(self.ant_num_tx, 'TX', rfs_num_ctl, dict_ant)
         wiring_rx = format_ant(self.ant_num_rx, 'RX', rfs_num_ctl, dict_ant)
 
-        table_str = """
-            <table><thead><tr>
-                <th>Antenna Port</th>
-                <th>RF Switch Port</th>
-                <th>RF Switch Control Signal</th>
-            </tr></thead><tbody>{:}</tbody></table>
-        """
-
         self.dict_ant = dict_ant
 
-        return Markup(table_str.format(wiring_tx + wiring_rx))
+        return Markup(wiring_tx + wiring_rx)
 
     # create wiring table between mcu and rf switches
     def get_wiring_gpio(self, skipped_gpio=()):
@@ -72,16 +64,16 @@ class HwSpec:
                 base_str += "<tr><td>{:}</td><td>{:}</td></tr>".format(name_control_ln, name_gpio)
             dict_gpio[port_type] = gpio_list
 
-        table_str = """
-            <table><thead><tr>
-                <th>RF Switch Control Lane</th>
-                <th>MCU GPIO</th>
-            </tr></thead><tbody>{:}</tbody></table>
-        """
+        # table_str = """
+        #     <table><thead><tr>
+        #         <th>RF Switch Control Lane</th>
+        #         <th>MCU GPIO</th>
+        #     </tr></thead><tbody>{:}</tbody></table>
+        # """
 
         self.dict_gpio = dict_gpio
 
-        return Markup(table_str.format(base_str))
+        return Markup(base_str)
 
     # get GPIO value mapping for each antenna
     def get_ant_gpio_map(self):

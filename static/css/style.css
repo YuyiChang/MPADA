@@ -6,40 +6,64 @@ html {
 body {
     max_width: 1000px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0px;
+}
+
+.m_contianer {
+    padding: 5px 20px;
+}
+
+.m_div {
+    background-color: #2e6171;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
 }
 
 .step {
-    padding: 10px 20px;
-}
-
-table, th, td {
-    border: 1px solid;
-    font-size: 14px;
-    /* border-collapse: collapse; */
-}
-
-th, td {
-    text-align: center;
-    padding: 10px;
-}
-
-tr:hover {
-    background-color: green;
-    color: white;
+    padding: 3px 0px;
 }
 
 .form__submit {
     padding: 10px 16px;
     font-size: 16px;
     background-color: unset;
-    border: 2px solid green;
+    border: 2px solid #2e6171;
     border-radius: 4px;
     cursor: pointer;
     float: right;
 }
 
 .form__submit:hover {
-    background-color: green;
+    background-color: #2e6171;
     color: white
 }
+
+/* =========================== */
+.topnav {
+    background-color: #2e6171;
+    overflow: hidden;
+  }
+  
+  .topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .topnav a.active {
+    background-color: #5b8c5a;
+    color: white;
+  }
