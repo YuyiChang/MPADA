@@ -9,12 +9,23 @@ body {
     padding: 0px;
 }
 
+footer {
+    padding: 0px 20px;
+    /* position: fixed;
+    bottom: 0; */
+}
+
 .m_contianer {
     padding: 5px 20px;
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
 }
 
 .m_div {
     background-color: #2e6171;
+    max-width: 100%;
+    height: auto;
 }
 
 .center {

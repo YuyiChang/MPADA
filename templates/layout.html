@@ -9,7 +9,7 @@
 
     <body>
         <div class="m_div">
-            <img src="../static/img/cover.png" alt="MPADA" class="center" style="max-width:300px">
+            <img src="../static/img/cover.png" alt="MPADA" class="center" style="max-width:350px">
         </div>        
         <div class="topnav">
             <a class="active" href="/">Home</a>
@@ -17,11 +17,19 @@
             <a href="/sweep_settings">Sweep Settings</a>
         </div>
 
+        <!-- body contents -->
         <div class="m_contianer">
             <header>
                 <h1>{% block header %}{% endblock %}</h1>
             </header>
             {% block content %}{% endblock %}
         </div>
+
+        <!-- <div class="m_contianer"> -->
+            <footer>
+                <p>Yuyi Chang, <a href="https://sense-lab-osu.github.io/">SENSE Lab</a> @ OSU ECE<br>
+                <a href="mailto:chang.1560@osu.edu">chang.1560@osu.edu</a></p>
+            </footer>
+        <!-- </div>         -->
     </body>
 </html>
