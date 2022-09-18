@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sweep Settings | MPADA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="../static/css/style.css" />
+</head>
+
+<body>
+    <div class="step">
+        <h1>Sweep Settings</h1>
+        <form method="POST">
+            <ul>
+                <li>
+                    <label for="num_actuation"># of actuations (TX-RX pair):</label>
+                    <input type="number" id="num_actuation" name="num_actuation" min="1" max="8" step="1" value="3">
+                </li>
+                <li>
+                    <label for="freq_start">Start frequency (GHz):</label>
+                    <input type="number" id="freq_start" name="freq_start" min="0" max="26" value="0.5" step="0.1">
+                </li>
+                <li>
+                    <label for="freq_stop">Stop frequency (GHz):</label>
+                    <input type="number" id="freq_stop" name="freq_stop" min="0" max="26" value="6" step="0.1">
+                </li>
+                <li>
+                    <label for="num_pt"># of data points per sweep:</label>
+                    <select name="num_pt" id="num_pt">
+                        <option value="201">201</option>
+                        <option value="401">401</option>
+                        <option value="801">801</option>
+                        <option value="1601">1601</option>
+                        <option value="3201">3201</option>
+                        <option value="6401">6401</option>
+                        <option value="12801">12801</option>
+                      </select>
+                </li>
+            </ul>
+            <input class="form__submit" type="submit" value="Confirm sweep settings"/>
+        </form>
+        
+    </div>    
+</body>
+
+</html>
