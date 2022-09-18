@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, redirect
-from mpada import port_mapping
+from mpada import port_mapping, vna_sweep
 
 app = Flask(__name__)
 
 HwSpec = port_mapping.HwSpec()
+VnaSpec = vna_sweep.VnaSweep()
 
 @app.route("/", methods=["GET", "POST"])
 def main():
@@ -33,4 +34,17 @@ def create_port_mapping_table():
 
 @app.route("/sweep_settings", methods=["GET", "POST"])
 def create_sweep_settings():
+    HwSpec.get_ant_gpio_map() # make sure hw map is updated
+
+    if request.method == "POST":
+        VnaSpec.parse_sweep_post(request.form, (HwSpec.ant_list_tx, HwSpec.ant_list_rx))
+        return redirect("/sweeping")
+
     return render_template("sweep_settings.html")
+
+@app.route("/sweeping", methods=["GET", "POST"])
+def create_sweeping():
+    HwSpec.get_ant_gpio_map() # make sure hw map is updated
+    print(HwSpec.dict_ant_gpio)
+    print(VnaSpec.sweep_pair)
+    return render_template("sweeping.html")
