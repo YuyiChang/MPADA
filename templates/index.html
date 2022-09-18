@@ -1,53 +1,51 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Welcome to MPADA!</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-        <link rel="stylesheet" href="../static/css/style.css" />
-    </head>
+{% extends 'layout.html' %}
 
-    <body>
-        <h1>Welcome to MPADA!</h1>
-        <p><b>M</b>ulti<b>P</b>ort <b>A</b>ntenna <b>D</b>ata <b>A</b>cquisition, MPADA, is a tool for collecting S parameter data for MIMO antenna.</p>
+{% block header %}
+    {% block title %}Welcome!{% endblock %}
+{% endblock %}
 
-        <!-- Init connection -->
-        <div class="step">
-            <h2>Initialize VNA and MCU connections</h2>
-            <p>Initialize connection to VNA and MCU.</p>
-        </div>
+{% block content %}
+<p><b>M</b>ulti<b>P</b>ort <b>A</b>ntenna <b>D</b>ata <b>A</b>cquisition, MPADA, is a tool for collecting S parameter data for MIMO antenna.</p>
 
-        <!-- Config hardware -->
-        <div class="step">
-            <h2>Create hardware mappings</h2>
-            <p>Specify antenna port, RF switch port and MCU GPIOS.</p>
-            
-            <form id="port_config" method="POST">
-                <h3>Antenna</h3>
-                <ul>
-                    <li>
-                        <label for="num_tx"># of TX:</label>
-                        <input type="number" id="num_tx" name="num_tx" min="1" max="8" step="1" value="3">
-                    </li>
-                    <li>
-                        <label for="num_rx"># of RX:</label>
-                        <input type="number" id="num_rx" name="num_rx" min="1" max="8" step="1" value="3">
-                    </li>
-                </ul>
+<!-- Init connection -->
+<div class="step">
+    <h2>Initialize VNA and MCU connections</h2>
+    <p>Initialize connection to VNA and MCU.</p>
+</div>
 
-                <h3>RF Switch (TX and RX switches)</h3>
-                <ul>
-                    <li>
-                        <label for="num_rfs_ctl"># of Control Port:</label>
-                        <input type="number" id="num_rfs_ctl" name="num_rfs_ctl" min="1" max="3" step="1" value="3">
-                    </li>
-                </ul>
+<!-- Config hardware -->
+<div class="step">
+    <h2>Create hardware mappings</h2>
+    <p>Specify antenna port, RF switch port and MCU GPIOS.</p>
+    
+    <form id="port_config" method="POST">
+        <h3>Antenna</h3>
+        <ul>
+            <li>
+                <label for="num_tx"># of TX:</label>
+                <input type="number" id="num_tx" name="num_tx" min="1" max="8" step="1" value="3">
+            </li>
+            <li>
+                <label for="num_rx"># of RX:</label>
+                <input type="number" id="num_rx" name="num_rx" min="1" max="8" step="1" value="3">
+            </li>
+        </ul>
 
-                <input
-                    class="form__submit"
-                    type="submit"
-                    value="Create port mapping"
-                />
-            </form>
-        </div>
-    </body>
-</html>
+        <h3>RF Switch (TX and RX switches)</h3>
+        <ul>
+            <li>
+                <label for="num_rfs_ctl"># of Control Port:</label>
+                <input type="number" id="num_rfs_ctl" name="num_rfs_ctl" min="1" max="3" step="1" value="3">
+            </li>
+        </ul>
+
+        <input
+            class="form__submit"
+            type="submit"
+            value="Create port mapping"
+        />
+    </form>
+</div>
+
+{% endblock %}
+

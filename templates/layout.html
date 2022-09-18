@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock %} - MPADA</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+        <link rel="stylesheet" href="../static/css/style.css" />
+    </head>
+
+    <body>
+        <header>
+            <h1>{% block header %}{% endblock %}</h1>
+        </header>
+        {% block content %}{% endblock %}
+    </body>
+</html>
