@@ -42,12 +42,13 @@ class VnaSweep:
         num_sweep = len(self.sweep_pair)
         base_str = ""
 
-        for h in ["Sweep", "TX Selected", "RX Selected"]:
+        h_list = ["Sweep", "TX Selected", "RX Selected"]
+        for h in h_list:
             base_str += "<tr>\n\t<th>{:}</th>\n".format(h)
             for i in range(num_sweep):
-                if h == "Sweep":
+                if h == h_list[0]:
                     base_str += "\t<th>{:}</th>\n".format(i)
-                elif h == "TX":
+                elif h == h_list[1]:
                     base_str += "\t<td>{:}</td>\n".format(self.sweep_pair[i][0])
                 else:
                     base_str += "\t<td>{:}</td>\n".format(self.sweep_pair[i][1])
