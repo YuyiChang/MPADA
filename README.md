@@ -30,11 +30,13 @@ The tool enables automatic testing and control to a set of RF switches and Vecto
 
 ## Required Packages
 
+- python
 - flask
-- pyvisa
-- pyserial
-- numpy
+- python-dotenv
 - matplotlib
+- numpy
+- pandas
+- pyvisa
 
 ## About
 

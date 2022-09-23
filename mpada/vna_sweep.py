@@ -1,7 +1,7 @@
 import numpy as np
 from flask import Markup
 from mpada_test import test_sweep
-import tempfile
+from mpada import vna_comm
 
 class VnaSweep:
     def __init__(self):
@@ -11,6 +11,7 @@ class VnaSweep:
         self.sweep_pair = [('TX_0', 'RX_0'), ('TX_1', 'RX_1'), ('TX_2', 'RX_2')]
         self.fig = None
         self.data = None
+        self.vna = vna_comm.VnaVisa() # VNA instrument, vna_comm class
 
     def get_info(self):
         print("\n=======================================================")
