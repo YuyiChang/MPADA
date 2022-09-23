@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect
+from unittest import async_case
+from flask import Flask, render_template, request, redirect, send_file
 from mpada import port_mapping, vna_sweep
 from mpada_test import test_sweep
 
@@ -52,7 +53,18 @@ def create_sweeping():
     fig_sweep = test_sweep.get_blank_fig_base64()
 
     if request.method == "POST":
-        print("Start sweeping...")
-        VnaSpec.sweep(HwSpec.dict_ant_gpio)
-        fig_sweep = test_sweep.get_random_fig_base64()
+        print(request.form.keys())
+        if "start-sweep" in request.form.keys():
+            print("Start sweeping...")
+            VnaSpec.sweep(HwSpec.dict_ant_gpio)
+
+            # if test, return a random fig, otherwise call vna class
+            # fig_sweep = test_sweep.get_random_fig_base64()
+            fig_sweep = VnaSpec.fig
+
+        # save the data if needed
+        elif "save-sweep" in request.form.keys():
+            print("save the data")
+            f = VnaSpec.save_data()
+            return send_file(f, download_name="test.csv", as_attachment=True)
     return render_template("sweeping.html", table_sweep=table_sweep, fig_sweep=fig_sweep)

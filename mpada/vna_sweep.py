@@ -1,5 +1,7 @@
 import numpy as np
 from flask import Markup
+from mpada_test import test_sweep
+import tempfile
 
 class VnaSweep:
     def __init__(self):
@@ -7,6 +9,8 @@ class VnaSweep:
         self.freq_stop = int(6e9)
         self.num_pt = int(401)
         self.sweep_pair = [('TX_0', 'RX_0'), ('TX_1', 'RX_1'), ('TX_2', 'RX_2')]
+        self.fig = None
+        self.data = None
 
     def get_info(self):
         print("\n=======================================================")
@@ -56,7 +60,7 @@ class VnaSweep:
         return Markup(base_str)
 
     # start sweeping
-    def sweep(self, dict_ctl):
+    def sweep(self, dict_ctl, debug=True):
         def get_gpio_and_signal(dict_ctl, ant):
             return dict_ctl[ant][0], dict_ctl[ant][1]
 
@@ -65,8 +69,13 @@ class VnaSweep:
             for g, s in zip(gpio, sig):
                 base_str += "{:}={:} ".format(g, s)
             return base_str
-            
+
         num_sweep = len(self.sweep_pair)
+
+        if debug:
+            self.fig, self.data = test_sweep.get_random_fig_base64(num_sweep)
+            
+        
         for i in range(num_sweep):
             tx, rx = self.sweep_pair[i]
             print("======== Starting Sweep #{:}========".format(i))
@@ -80,6 +89,11 @@ class VnaSweep:
             # for testing, show a randomly generated signal
             
             print("{:}: {:}\n{:}: {:}".format(tx, tx_str, rx, rx_str))
-            print("========== End of Sweep ==========".format(i))
+            print("========== End of Sweep ==========".format(i))   
 
+    def save_data(self):
+        f = tempfile.TemporaryFile()
+        self.data.to_csv(f)
+        f.seek(0)
+        return f
 

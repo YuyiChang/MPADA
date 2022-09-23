@@ -13,11 +13,17 @@
 
 <div class="step">
     <form method="POST">
-        <input class="form__submit" type="submit" value="Start"/>
+        <input name="start-sweep" class="form__submit" type="submit" value="Start"/>
     </form>
 </div>
 
 <div class="step">
     <img src="data:image/png;base64,{{fig_sweep}}">
+</div>
+
+<div class="step">
+    <form method="POST">
+        <input name="save-sweep" class="form__submit" type="submit" value="Save"/>
+    </form>
 </div>
 {% endblock %}
