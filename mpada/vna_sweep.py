@@ -1,7 +1,9 @@
 import numpy as np
 from flask import Markup
-from mpada_test import test_sweep
 from mpada import vna_comm
+from mpada import util_data
+import tempfile
+import pandas
 
 class VnaSweep:
     def __init__(self):
@@ -61,7 +63,7 @@ class VnaSweep:
         return Markup(base_str)
 
     # start sweeping
-    def sweep(self, dict_ctl, debug=True):
+    def sweep(self, dict_ctl, demo=True):
         def get_gpio_and_signal(dict_ctl, ant):
             return dict_ctl[ant][0], dict_ctl[ant][1]
 
@@ -73,28 +75,38 @@ class VnaSweep:
 
         num_sweep = len(self.sweep_pair)
 
-        if debug:
-            self.fig, self.data = test_sweep.get_random_fig_base64(num_sweep)
-            
-        
+        MyData = util_data.Data(self)
+
+        # iterate all sweep pairs
         for i in range(num_sweep):
             tx, rx = self.sweep_pair[i]
             print("======== Starting Sweep #{:}========".format(i))
             tx_gpio, tx_sig = get_gpio_and_signal(dict_ctl, tx)
             rx_gpio, rx_sig = get_gpio_and_signal(dict_ctl, rx)
 
+            # control string for debug and/or mcu host
             tx_str = get_control_str(tx, tx_gpio, tx_sig)
             rx_str = get_control_str(rx, rx_gpio, rx_sig)
-
+            print("{:}: {:}\n{:}: {:}".format(tx, tx_str, rx, rx_str))
+            
             # TODO: set control signal to VNA and MCU
             # for testing, show a randomly generated signal
+            if demo:
+                data_trace = np.random.randn(self.num_pt) + 1j*np.random.randn(self.num_pt)
+                MyData.add_S_dec(data_trace, 'S_{:}'.format(i))
+            else:
+                data_trace = self.vna.get_trace()
+                MyData.add_S_raw(data_trace, 'S_{:}'.format(i)) 
             
-            print("{:}: {:}\n{:}: {:}".format(tx, tx_str, rx, rx_str))
+            
             print("========== End of Sweep ==========".format(i))   
 
+        # generate figure from data
+        self.data = MyData
+        self.fig = MyData.to_fig()
+        print(np.shape(self.data))
+
+    ######
     def save_data(self):
-        f = tempfile.TemporaryFile()
-        self.data.to_csv(f)
-        f.seek(0)
-        return f
+        return self.data.to_csv()
 

@@ -28,26 +28,23 @@ class VnaVisa:
             print("resource list empty, no instrument to select!")
 
     # init/reset instrument
-    def init_ins(self, vna_sweep, port_name="S12"):
+    def init_ins(self, vna_sweep, port_name='S12'):
         ins = self.ins
         # set timeout to 5s
         ins.timeout = 5000
 
-        # preset the PNA and wait for preset completion via OPC
-        ins.write("SYST:PRES;*OPC?")
+        # present VNA and wait for preset completion via OPC
+        ins.write("SYST:FPReset;*OPC?")
         ins.read()
-
         # clear event status registers and empty the error queue
         ins.write("*CLS")
-
-        ## set ch and trace to S12 by default
-        # select default measurement name
-        ins.write("CALC:PAR:SEL 'CH1_S11_1'")
-        # set data tranfer format to ASCII
-        ins.write("FORM:DATA ASCII")
-        # alter measure from S11 to S21
-        ins.write("CALC:PAR:MOD {:}".format(port_name))
-
+        # init display window
+        ins.write("DISP:WIND1:STATE ON")
+        # use S12 measurement
+        ins.write("CALC:PAR:DEF:EXT '{:}', {:}".format(port_name, port_name))
+        # attach S12 measurement to display window
+        ins.write("DISP:WIND1:TRAC:FEED 'S12'")
+        
         ## set start/end freq and number of trace points
         # set number of points
         ins.write("SENS:SWE:POIN " + str(vna_sweep.num_pt) + ";*OPC?")
@@ -56,19 +53,29 @@ class VnaVisa:
         # set start and ending freq
         ins.write("SENS:FREQ:STAR " + str(vna_sweep.freq_start))
         ins.write("SENS:FREQ:STOP " + str(vna_sweep.freq_stop))
+
+        # set trigger mode to continuous
+        ins.write("SENS:SWE:MODE CONT;*OPC?") # continuous trigger
+        ins.read()
    
    
     # soft reset/init
     def soft_reset(self, vna_sweep):
         ins = self.ins
+        ins.write("*CLS")
         ## set start/end freq and number of trace points
         # set number of points
         ins.write("SENS:SWE:POIN " + str(vna_sweep.num_pt) + ";*OPC?")
         ins.read()
 
-        # set start and ending freq
+        # set start and ending freq, and sweep mode
         ins.write("SENS:FREQ:STAR " + str(vna_sweep.freq_start))
         ins.write("SENS:FREQ:STOP " + str(vna_sweep.freq_stop))
+        ins.write("SENS:SWE:MODE CONT;*OPC?")
+        ins.read()
         
-
+    # get trace data in string format
+    def get_trace(self):
+        self.ins.write("CALC:DATA? SDATA")
+        return ins.read()
     
