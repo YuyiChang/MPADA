@@ -8,19 +8,29 @@ The tool enables automatic testing and control to a set of RF switches and Vecto
 
 - Config number of port and RF switch
 - Automatic generate hardware wiring map
-- Config sweep setting 
-    - start/end frequency, number of points, antenna pairs, etc.
+- Config sweep setting
+  - start/end frequency, number of points, antenna pairs, etc.
 - Sweep control and real-time visualization
 - Data export
 
 ## Installation
 
 - Install required packages using command ```$ conda env create --file environment.yml```
-    - if manual install is desired, please refer [Required Packages](#Required--Packages)
+  - if manual install is desired, please refer [Required Packages](#Required--Packages)
 - Install VISA driver as required by [PyVISA](https://pyvisa.readthedocs.io/en/latest/introduction/configuring.html)
 - Start sweeping!
-    - ```$ flask run```
-    - navigate to [http://127.0.0.1:5000](http://127.0.0.1:5000)
+  - ```$ flask run```
+  - - navigate to [http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+## Hardware Requirements
+
+- Vector Network Analyzer
+  - tested on Keysight PNA series
+- RF switch
+  - e.g., [HMC321A](https://www.analog.com/en/products/hmc321a.html)
+- Microcontroller
+- Antenna
+- Cable, adapter, etc.
 
 ## Roadmap 
 
