@@ -2,8 +2,7 @@ import numpy as np
 from flask import Markup
 from mpada import vna_comm
 from mpada import util_data
-import tempfile
-import pandas
+import time
 
 class VnaSweep:
     def __init__(self):
@@ -98,6 +97,7 @@ class VnaSweep:
                 self.vna.auto_rescale()
                 data_trace = self.vna.get_trace()
                 MyData.add_S_raw(data_trace, 'S_{:}'.format(i)) 
+                time.sleep(0.05)
             
             
             print("========== End of Sweep ==========".format(i))   
