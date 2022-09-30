@@ -9,7 +9,7 @@ class VnaSweep:
     def __init__(self):
         self.freq_start = int(0.5e9)
         self.freq_stop = int(6e9)
-        self.num_pt = int(401)
+        self.num_pt = int(201)
         self.sweep_pair = [('TX_0', 'RX_0'), ('TX_1', 'RX_1'), ('TX_2', 'RX_2')]
         self.fig = None
         self.data = None
@@ -95,6 +95,7 @@ class VnaSweep:
                 data_trace = np.random.randn(self.num_pt) + 1j*np.random.randn(self.num_pt)
                 MyData.add_S_dec(data_trace, 'S_{:}'.format(i))
             else:
+                self.vna.auto_rescale()
                 data_trace = self.vna.get_trace()
                 MyData.add_S_raw(data_trace, 'S_{:}'.format(i)) 
             

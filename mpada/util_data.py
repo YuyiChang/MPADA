@@ -13,8 +13,8 @@ class Data:
         self.data['FREQ'] = np.linspace(VnaSweepSpec.freq_start, VnaSweepSpec.freq_stop, VnaSweepSpec.num_pt)
 
     def add_S_raw(self, trace_data, name):
-        S = self.parse_raw_S(trace_data)
-        self.data[name] = S
+        data = self.parse_raw_S(trace_data)
+        self.data[name] = data[::2] + 1j*data[1::2]
 
     def add_S_dec(self, trace_data, name):
         self.data[name] = trace_data
@@ -23,7 +23,7 @@ class Data:
     def parse_raw_S(self, trace_data):
         return np.fromstring(trace_data, sep=',')
 
-    def to_fig(self):
+    def to_fig(self, use_db=True):
         fig = plt.figure()
         tmp = BytesIO()
         data = self.data
@@ -31,11 +31,17 @@ class Data:
         num_sweep = np.shape(data)[1]-1
         for i in range(num_sweep):
             s = data['S_{:}'.format(i)]
-            plt.plot(f, np.abs(s), label="sweep {:}".format(i))
+            if use_db:
+                plt.plot(f, 20*np.log10(np.abs(s)), label="sweep {:}".format(i))
+            else:
+                plt.plot(f, np.abs(s), label="sweep {:}".format(i))
         plt.legend()
-        plt.title('this is a test image')
+        # plt.title('Collected Data')
         plt.xlabel('frequency (Hz)')
-        plt.ylabel('magnitude')
+        if use_db:
+            plt.ylabel('magnitude (dB)')
+        else:
+            plt.ylabel('magnitude')
         plt.tight_layout()
         fig.savefig(tmp, format='png')
         encoded = base64.b64encode(tmp.getvalue()).decode('utf-8')
