@@ -1,6 +1,6 @@
 name: mpada
 channels:
-  - defaults
+  - conda-forge
 dependencies:
   - python=3.10
   - flask
@@ -9,3 +9,4 @@ dependencies:
   - numpy
   - pandas
   - pyvisa
+  - pyftdi

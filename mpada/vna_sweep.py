@@ -104,9 +104,24 @@ class VnaSweep:
         # generate figure from data
         self.data = MyData
         self.fig = MyData.to_fig()
-        print(np.shape(self.data))
+        # print(np.shape(self.data))
 
     ######
     def save_data(self):
         return self.data.to_csv()
+
+    ####
+    def init_vna(self):
+        visa = self.vna
+        visa.get_all_resource()
+        if visa.get_instrument():
+            visa.init_ins(self)
+        else:
+            print("instrument discovery error")
+
+    ####
+    def reset_vna(self):
+        if self.vna.ins:
+            self.vna.soft_reset(self)
+
 

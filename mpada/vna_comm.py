@@ -1,10 +1,18 @@
 import pyvisa
 import time
+import os
 
 class VnaVisa:
     def __init__(self):
         # io driver directory
-        self.dir_io = '/opt/keysight/iolibs/libktvisa32.so' 
+        if os.name == 'nt':
+            # os.add_dll_directory('C:\\Program Files\\Keysight\\IO Libraries Suite\\')
+            self.dir_io = 'C:\\Program Files\\Keysight\\IO Libraries Suite\\'
+        elif os.name == 'posix':
+            self.dir_io = '/opt/keysight/iolibs/libktvisa32.so' 
+        else:
+            EnvironmentError("unsupported OS: {:}".format(os.name))
+        
         # VISA resource manager
         self.rm = None
         # my instrument
@@ -24,8 +32,11 @@ class VnaVisa:
             print(rest_list[index])
             self.ins = self.rm.open_resource(rest_list[index])
             print(self.ins.query('*IDN?'))
+            return True
         else:
             print("resource list empty, no instrument to select!")
+            return False
+        
 
     # init/reset instrument
     def init_ins(self, vna_sweep, port_name='S12'):
