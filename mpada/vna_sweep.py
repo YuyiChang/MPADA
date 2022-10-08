@@ -1,7 +1,9 @@
+import warnings
 import numpy as np
 from flask import Markup
 from mpada import vna_comm
 from mpada import util_data
+from mpada import ftdi_comm
 import time
 
 class VnaSweep:
@@ -13,6 +15,7 @@ class VnaSweep:
         self.fig = None
         self.data = None
         self.vna = vna_comm.VnaVisa() # VNA instrument, vna_comm class
+        self.mcu = ftdi_comm.MyFtdi()
 
     def get_info(self):
         print("\n=======================================================")
@@ -88,16 +91,35 @@ class VnaSweep:
             rx_str = get_control_str(rx, rx_gpio, rx_sig)
             print("{:}: {:}\n{:}: {:}".format(tx, tx_str, rx, rx_str))
             
-            # TODO: set control signal to VNA and MCU
             # for testing, show a randomly generated signal
             if demo:
+                if self.mcu.connected:
+                    try:
+                        mcu = self.mcu
+                        mcu.digital_write_high(tx_gpio + rx_gpio, tx_sig + rx_sig)
+                        time.sleep(1) # protection time before init sweeping
+                        mcu.reset()
+                    except:
+                        warnings("mcu set pin error")
                 data_trace = np.random.randn(self.num_pt) + 1j*np.random.randn(self.num_pt)
                 MyData.add_S_dec(data_trace, 'S_{:}'.format(i))
             else:
+                if self.mcu.connected:
+                    try:
+                        mcu = self.mcu
+                        mcu.digital_write_high(tx_gpio + rx_gpio, tx_sig + rx_sig)
+                        time.sleep(0.3) # protection time before init sweeping
+                    except:
+                        warnings("mcu set pin error")
                 self.vna.auto_rescale()
                 data_trace = self.vna.get_trace()
                 MyData.add_S_raw(data_trace, 'S_{:}'.format(i)) 
                 time.sleep(0.05)
+                if self.mcu.connected:
+                    try:
+                        mcu.reset()
+                    except:
+                        warnings("mcu set pin error")
             
             
             print("========== End of Sweep ==========".format(i))   

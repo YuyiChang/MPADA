@@ -20,18 +20,18 @@ def flashing_light(ftdi):
 
 def multi_pin_flashing(ftdi):
     counter = 0
-    while counter < 1:
+    while counter < 10:
         # ftdi.digital_write_raw(0x0F)
-        ftdi.digital_write(pin_grp_1, 1)
+        ftdi.digital_write_high(pin_grp_1, [1, 0, 1])
         sleep(1)
         # ftdi.digital_write_raw(0x00)
-        ftdi.digital_write(pin_grp_1, 0)
+        # ftdi.digital_write(pin_grp_1, 0)
+        ftdi.reset()
         sleep(1)
 
-        ftdi.digital_write(pin_grp_2, 1)
+        ftdi.digital_write_high(pin_grp_2, [1, 1, 0])
         sleep(1)
-        ftdi.digital_write(pin_grp_2, 0)
-        sleep(1)
+        ftdi.reset()
         counter += 1
 
 ####
