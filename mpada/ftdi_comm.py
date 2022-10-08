@@ -1,8 +1,48 @@
-import pyftdi.ftdi.Ftdi as ftdi
+from pyftdi.gpio import GpioAsyncController
+from pyftdi.ftdi import Ftdi as ftdi
 
 class MyFtdi:
     def __init__(self):  
-        self.dev = None
+        self.gpio = GpioAsyncController()
+        self.pin_state = 0x00
+        self.pin_map = {
+            'GPIO0': 0x01,
+            'GPIO1': 0x02,
+            'GPIO2': 0x04,
+            'GPIO3': 0x08,
+            'GPIO4': 0x10,
+            'GPIO5': 0x20,
+            'GPIO6': 0x40,
+            'GPIO7': 0x80
+        }
         print(ftdi.show_devices())
+        try:
+            # attempt to connect any ftdi device connected, set all pin to output mode
+            self.gpio.configure('ftdi:///1', direction=0xFF)
+            self.reset()
+        except:
+            print("Connection failed. Is FTDI plugged in?")
 
-print(ftdi.show_devices())
+    # mode: 1 (HIGH), 0 (LOW)
+    def digital_write(self, pin, mode: int) -> None:
+        if isinstance(pin, str):
+            pin = [pin]
+        for p in pin:
+            # set high
+            if mode == 1:
+                self.pin_state |= self.pin_map[p]
+            elif mode == 0:
+                self.pin_state &= self.pin_map[p]
+        print(bin(self.pin_state))
+        self.gpio.write(self.pin_state)
+
+    def digital_write_raw(self, pin_raw):
+        self.gpio.write(pin_raw)
+
+    # reset all pin
+    def reset(self) -> None:
+        self.gpio.write(0x00)
+        self.pin_state = 0x00
+
+
+    
