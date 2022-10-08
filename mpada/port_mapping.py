@@ -62,7 +62,7 @@ class HwSpec:
                 name_control_ln = port_type + "_" + chr(65 + j)
                 while curr_gpio in skipped_gpio:
                     curr_gpio += 1
-                name_gpio = "GPIO_" + str(curr_gpio) 
+                name_gpio = "GPIO" + str(curr_gpio) 
                 gpio_list.append(name_gpio)
                 curr_gpio += 1
                 base_str += "<tr><td>{:}</td><td>{:}</td></tr>".format(name_control_ln, name_gpio)

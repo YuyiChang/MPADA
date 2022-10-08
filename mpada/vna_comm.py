@@ -7,7 +7,7 @@ class VnaVisa:
         # io driver directory
         if os.name == 'nt':
             # os.add_dll_directory('C:\\Program Files\\Keysight\\IO Libraries Suite\\')
-            self.dir_io = 'C:\\Program Files\\Keysight\\IO Libraries Suite\\'
+            self.dir_io = ''
         elif os.name == 'posix':
             self.dir_io = '/opt/keysight/iolibs/libktvisa32.so' 
         else:
@@ -88,5 +88,7 @@ class VnaVisa:
     # get trace data in string format
     def get_trace(self):
         self.ins.write("CALC:DATA? SDATA")
-        return ins.read()
+        return self.ins.read()
     
+    def auto_rescale(self):
+        self.ins.write("DISP:WIND:TRAC:Y:AUTO")
