@@ -94,6 +94,7 @@ class HwSpec:
             if key == 'num_rfs_ctl':  
                 self.rfs_num_port = pow(2, val)
                 self.mcu_num_gpio = 2 * val
+                self.rfs_num_ctl = val
             elif key == 'num_tx':
                 self.ant_num_tx = val
             elif key == 'num_rx':
