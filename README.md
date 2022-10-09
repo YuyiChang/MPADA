@@ -29,12 +29,13 @@ The tool enables automatic testing and control to a set of RF switches and Vecto
 - RF switch
   - e.g., [HMC321A](https://www.analog.com/en/products/hmc321a.html)
 - Microcontroller
+  - e.g., [FT232H](https://www.adafruit.com/product/2264), [C232HD](https://ftdichip.com/products/c232hd-ddhsp-0/)
 - Antenna
+  - aka your design!
 - Cable, adapter, etc.
 
 ## Roadmap 
 
-- add support to FTDI devices
 - add support to import/export antenna configurations
 - add support to dynamic antenna port configuration
 
@@ -47,6 +48,7 @@ The tool enables automatic testing and control to a set of RF switches and Vecto
 - numpy
 - pandas
 - pyvisa
+- pyftdi
 
 ## About
 
