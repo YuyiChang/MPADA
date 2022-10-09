@@ -6,30 +6,35 @@
 
 {% block content %}
 <form method="POST">
-    <ul>
-        <li>
+    <div class="w3-cell-row">
+        <div class="w3-row-padding">
             <label for="is_sweep_opposite">Sweep opposite ANT pairs?:</label>
-            <input type="checkbox" id="is_sweep_opposite" name="is_sweep_opposite" value="TRUE">
-        </li>
-        <li>
+            <input type="checkbox" id="is_sweep_opposite" name="is_sweep_opposite" class="w3-check" value="TRUE">
+        </div>
+    
+        <div class="w3-row-padding">
             <label for="is_sweep_all">Sweep ALL ANT pairs? (Coming soon):</label>
-            <input type="checkbox" id="is_sweep_all" name="is_sweep_all" value="TRUE">
-        </li>
-        <li>
+            <input type="checkbox" id="is_sweep_all" name="is_sweep_all" class="w3-check" value="TRUE">
+        </div>
+        
+        <div class="w3-row-padding">
             <label for="num_actuation"># of actuations (TX-RX pair):</label>
-            <input type="number" id="num_actuation" name="num_actuation" min="1" max="8" step="1" value="3">
-        </li>
-        <li>
+            <input type="number" id="num_actuation" name="num_actuation" class="w3-input w3-border" min="1" max="8" step="1" value="3">
+        </div>
+        
+        <div class="w3-row-padding">
             <label for="freq_start">Start frequency (GHz):</label>
-            <input type="number" id="freq_start" name="freq_start" min="0" max="26" value="0.5" step="0.1">
-        </li>
-        <li>
+            <input type="number" id="freq_start" name="freq_start" class="w3-input w3-border" min="0" max="26" value="0.5" step="0.1">
+        </div>
+        
+        <div class="w3-row-padding">
             <label for="freq_stop">Stop frequency (GHz):</label>
-            <input type="number" id="freq_stop" name="freq_stop" min="0" max="26" value="6" step="0.1">
-        </li>
-        <li>
+            <input type="number" id="freq_stop" name="freq_stop" class="w3-input w3-border" min="0" max="26" value="6" step="0.1">
+        </div>
+
+        <div class="w3-row-padding">
             <label for="num_pt"># of data points per sweep:</label>
-            <select name="num_pt" id="num_pt">
+            <select class="w3-select" name="num_pt" id="num_pt">
                 <option value="201">201</option>
                 <option value="401">401</option>
                 <option value="801">801</option>
@@ -38,8 +43,8 @@
                 <option value="6401">6401</option>
                 <option value="12801">12801</option>
             </select>
-        </li>
-    </ul>
+        </div>
+    </div>
     <input class="form__submit" type="submit" value="Confirm sweep settings" />
 </form>
 {% endblock %}
