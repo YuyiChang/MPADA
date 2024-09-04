@@ -1,0 +1,5 @@
+{
+    "sweep": "none",
+    "tof_rp2040_u2if.vl53l0x.main": {"n_steps": 10},
+    "u2if_stepper.main": {"n_steps": 200}
+}

@@ -1,0 +1,8 @@
+numpy
+matplotlib
+gradio
+pyvisa
+pyvisa-py
+pandas
+tqdm
+# pyftdi

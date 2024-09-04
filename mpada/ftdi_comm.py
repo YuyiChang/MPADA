@@ -37,7 +37,7 @@ class MyFtdi:
             # set high
             if mode == 1:
                 self.pin_state |= self.pin_map[p]
-        print(bin(self.pin_state))
+        # print(bin(self.pin_state))
         self.gpio.write(self.pin_state)
 
     def digital_write_raw(self, pin_raw):

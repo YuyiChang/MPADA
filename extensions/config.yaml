@@ -1,0 +1,27 @@
+# extension config file
+example_sensor:
+  enable: True
+  module: example_sensor.main
+  object: ExampleSensor
+rp2040_u2if_interface_core:
+  enable: True
+  module: rp2040_u2if_interface.core
+  object: RP2040
+  label: "RP2040 U2IF Resource Manager"
+rp2040_u2if_interface_tester:
+  enable: True
+  module: rp2040_u2if_interface.gpio_tester
+  object: RP2040Components
+  label: "RP2040 U2IF GPIO Tester"
+  requirement: rp2040_u2if_interface.core
+serial_manager:
+  enable: True
+  module: serial_manager.main
+  object: SerialManager
+  label: "Serial Manager"
+generic_stepper:
+  enable: True
+  module: generic_stepper.main
+  object: GenericStepper
+  label: "U2IF Generic Stepper motor control"
+  requirement: rp2040_u2if_interface.core

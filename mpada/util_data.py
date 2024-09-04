@@ -52,3 +52,21 @@ class Data:
         self.data.to_csv(f)
         f.seek(0)
         return f
+
+
+def hello_message():
+    print(r"""
+         __  __ ____   _    ____    _      _ _ _       
+        |  \/  |  _ \ / \  |  _ \  / \    | (_) |_ ___ 
+        | |\/| | |_) / _ \ | | | |/ _ \   | | | __/ _ \
+        | |  | |  __/ ___ \| |_| / ___ \  | | | ||  __/
+        |_|  |_|_| /_/   \_\____/_/   \_\ |_|_|\__\___|
+                                                        
+    """)
+    print("Welcome to MPADA lite! by Yuyi (chang.1560@osu.edu)\n")
+
+def get_stats(t):
+    t = np.array(t) * 1e3
+    stats = [len(t), np.min(t), np.max(t), np.mean(t), np.std(t), np.median(t)]
+    print("# sample = {}, min = {:.2f}, max = {:.2f}, mean = {:.2f}, stdev = {:.2f}, median = {:.2f}".format(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5]))
+    return stats
