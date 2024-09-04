@@ -6,7 +6,7 @@ Check out our [MPADA paper](https://arxiv.org/abs/2408.16850)!
 **M**ulti**P**ort **A**ntenna **D**ata **A**cquisition (MPADA) is a tool for automating S parameter data collections from MIMO antennas.
 The tool enables automatic testing and control to a set of RF switches and Vector Network Analyzer (VNA).
 
-## Feature
+## Features
 
 - Web based VNA control (remote access possible)
 - Single sweep across single/multiple antenna elements
@@ -15,12 +15,14 @@ The tool enables automatic testing and control to a set of RF switches and Vecto
 
 ## Installation
 
-- Install required packages using command ```$ conda env create --file environment.yml```
+- (Recommended) Create python environment
+- Install required packages ```$ pip install -r requirements.txt```
   - if manual install is desired, please refer [Required Packages](#Required--Packages)
-- Install VISA driver as required by [PyVISA](https://pyvisa.readthedocs.io/en/latest/introduction/configuring.html)
-- Start sweeping!
-  - ```$ flask run```
-  - - navigate to [http://127.0.0.1:5000](http://127.0.0.1:5000)
+- Verify VISA driver as required by [PyVISA](https://pyvisa.readthedocs.io/en/latest/introduction/configuring.html)
+- Start MPADA!
+  - ```$ python app.py```
+  - - navigate to [http://127.0.0.1:7860](http://127.0.0.1:7860)
+- Happy sweeping!
 
 ## Hardware Requirements
 
