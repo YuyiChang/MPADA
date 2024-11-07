@@ -54,7 +54,7 @@ The tool enables automatic testing and control to a set of RF switches and Vecto
 
 ## About
 
-License: MIT
+License: GPLv3
 
 If you use our tool in your research, we kindly ask you cite the following paper:
 
